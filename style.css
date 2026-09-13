@@ -61,6 +61,35 @@ body {
 }
 
 /* =========================================================
+   SECTION SELECT
+========================================================= */
+#section-select {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#section-select button {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--cyan);
+    background: rgba(0,229,255,.12);
+    border: 1px solid var(--cyan);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+#section-select button:hover {
+    background: var(--cyan);
+    color: #001018;
+    box-shadow: 0 0 15px rgba(0,229,255,.45);
+}
+
+/* =========================================================
    COUNTDOWN
 ========================================================= */
 #countdown-screen {
@@ -158,4 +187,92 @@ body {
     width: 40px;
     height: 40px;
     transition: left .12s linear;
+}
+
+/* =========================================================
+   EFFECTS (GOOD / MISS / BOOST)
+========================================================= */
+.effect {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+    font-weight: 1000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1200;
+    transition: opacity .2s, transform .2s;
+}
+
+#effect-good {
+    color: #00ff9d;
+    text-shadow: 0 0 25px rgba(0,255,157,.55);
+}
+
+#effect-miss {
+    color: #ff3b3b;
+    text-shadow: 0 0 25px rgba(255,59,59,.55);
+}
+
+#effect-boost {
+    color: #ffe600;
+    text-shadow: 0 0 25px rgba(255,229,0,.55);
+}
+
+.effect.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* =========================================================
+   RESULT SCREEN
+========================================================= */
+#result-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(1,5,10,.88);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.result-box {
+    background: rgba(0,0,0,.45);
+    padding: 40px 60px;
+    border-radius: 12px;
+    border: 1px solid var(--cyan);
+    box-shadow: 0 0 25px rgba(0,229,255,.35);
+}
+
+.result-box h2 {
+    font-size: 42px;
+    color: var(--cyan);
+    margin-bottom: 20px;
+}
+
+.result-box p {
+    font-size: 22px;
+    margin: 8px 0;
+}
+
+#result-retry {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--cyan);
+    background: rgba(0,229,255,.12);
+    border: 1px solid var(--cyan);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+#result-retry:hover {
+    background: var(--cyan);
+    color: #001018;
+    box-shadow: 0 0 15px rgba(0,229,255,.45);
 }

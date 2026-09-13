@@ -17,6 +17,17 @@
     <div id="title-screen">
         <h1>KIR_kai Sample</h1>
         <div class="subtitle">Typing Trial Edition</div>
+
+        <!-- セクション選択 -->
+        <div id="section-select">
+            <button data-section="1">SECTION 1</button>
+            <button data-section="2">SECTION 2</button>
+            <button data-section="3">SECTION 3</button>
+            <button data-section="4">SECTION 4</button>
+            <button data-section="5">SECTION 5</button>
+            <button data-section="6">SECTION 6</button>
+        </div>
+
         <div id="press-enter">PRESS ENTER</div>
     </div>
 
@@ -29,47 +40,34 @@
     <div class="question-text" id="word">読み込み中...</div>
     <div class="romaji-progress" id="romaji"></div>
 
+    <!-- HUD -->
     <div class="hud">
         <span>Score: <span id="score">0</span></span>
         <span>Miss: <span id="miss">0</span></span>
+        <span>Progress: <span id="percent">0%</span></span>
     </div>
 
     <!-- ランナー進捗バー -->
     <div id="runner-bar">
-        <img id="runner" src="https://i.imgur.com/8bX6pQp.png">
+        <img id="runner" src="img/character/Ateam.png">
     </div>
 
-    <!-- タイトル → カウントダウン制御 -->
-    <script>
-        let gameStarted = false;
+    <!-- GOOD / MISS / BOOST エフェクト -->
+    <div id="effect-good" class="effect">GOOD!</div>
+    <div id="effect-miss" class="effect">MISS!</div>
+    <div id="effect-boost" class="effect">BOOST!</div>
 
-        document.addEventListener("keydown", e => {
-            if (e.key === "Enter" && !gameStarted) {
-                document.getElementById("title-screen").style.display = "none";
-                startCountdown();
-                gameStarted = true;
-            }
-        });
-
-        async function startCountdown() {
-            const cd = document.getElementById("countdown-screen");
-            const text = document.getElementById("countdown");
-
-            cd.style.display = "flex";
-
-            const seq = ["3", "2", "1", "GO!!"];
-
-            for (let i = 0; i < seq.length; i++) {
-                text.textContent = seq[i];
-                text.style.animation = "none";
-                void text.offsetWidth;
-                text.style.animation = "";
-                await new Promise(r => setTimeout(r, 800));
-            }
-
-            cd.style.display = "none";
-        }
-    </script>
+    <!-- 結果画面 -->
+    <div id="result-screen">
+        <div class="result-box">
+            <h2>RESULT</h2>
+            <p id="result-section"></p>
+            <p id="result-score"></p>
+            <p id="result-miss"></p>
+            <p id="result-accuracy"></p>
+            <button id="result-retry">RETRY</button>
+        </div>
+    </div>
 
 </body>
 </html>
