@@ -1,0 +1,161 @@
+:root {
+    --bg: #02070d;
+    --cyan: #00e5ff;
+    --white: #f6fbff;
+    --yellow: #ffe600;
+    --font: "Segoe UI", "Yu Gothic", "Meiryo", sans-serif;
+    --mono: Consolas, "Courier New", monospace;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at 50% 15%, #0a2540 0, #030b14 42%, #01040a 100%);
+    color: var(--white);
+    font-family: var(--font);
+    text-align: center;
+}
+
+/* =========================================================
+   TITLE SCREEN
+========================================================= */
+#title-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(1,5,10,.88);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+#title-screen h1 {
+    font-size: 48px;
+    font-weight: 1000;
+    letter-spacing: .08em;
+    color: var(--cyan);
+    text-shadow: 0 0 15px rgba(0,229,255,.55);
+}
+
+#title-screen .subtitle {
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--yellow);
+    text-shadow: 0 0 15px rgba(255,229,0,.35);
+}
+
+#press-enter {
+    margin-top: 40px;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: .18em;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .25; }
+}
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+#countdown-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(1,5,10,.82);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 900;
+}
+
+#countdown {
+    font-size: 160px;
+    font-weight: 1000;
+    color: var(--cyan);
+    text-shadow: 0 0 45px rgba(0,229,255,.55);
+    animation: pop .8s ease-out;
+}
+
+@keyframes pop {
+    0% { opacity: 0; transform: scale(.3); }
+    40% { opacity: 1; transform: scale(1.15); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* =========================================================
+   QUESTION
+========================================================= */
+.question-text {
+    margin-top: 40px;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: .03em;
+    text-shadow: 0 0 13px rgba(255,255,255,.08);
+}
+
+/* =========================================================
+   ROMAJI PROGRESS
+========================================================= */
+.romaji-progress {
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 32px;
+    letter-spacing: .02em;
+}
+
+.romaji-progress .typed {
+    color: var(--cyan);
+    text-shadow: 0 0 8px rgba(0,229,255,.25);
+}
+
+.romaji-progress .current {
+    color: var(--white);
+    background: rgba(255,229,0,.12);
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+.romaji-progress .remaining {
+    color: #7392a6;
+}
+
+/* =========================================================
+   HUD
+========================================================= */
+.hud {
+    margin-top: 40px;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.hud span {
+    margin: 0 20px;
+    color: var(--cyan);
+}
+
+/* =========================================================
+   RUNNER PROGRESS BAR
+========================================================= */
+#runner-bar {
+    margin: 40px auto 0;
+    width: 80%;
+    height: 12px;
+    background: #001018;
+    border: 1px solid var(--cyan);
+    border-radius: 6px;
+    position: relative;
+}
+
+#runner {
+    position: absolute;
+    top: -18px;
+    left: 0%;
+    width: 40px;
+    height: 40px;
+    transition: left .12s linear;
+}

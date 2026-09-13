@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>KIR_kai Sample</title>
+
+    <!-- 外部CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ゲームロジック -->
+    <script src="game.js" defer></script>
+</head>
+
+<body>
+
+    <!-- タイトル画面 -->
+    <div id="title-screen">
+        <h1>KIR_kai Sample</h1>
+        <div class="subtitle">Typing Trial Edition</div>
+        <div id="press-enter">PRESS ENTER</div>
+    </div>
+
+    <!-- カウントダウン -->
+    <div id="countdown-screen">
+        <div id="countdown">3</div>
+    </div>
+
+    <!-- ゲーム画面 -->
+    <div class="question-text" id="word">読み込み中...</div>
+    <div class="romaji-progress" id="romaji"></div>
+
+    <div class="hud">
+        <span>Score: <span id="score">0</span></span>
+        <span>Miss: <span id="miss">0</span></span>
+    </div>
+
+    <!-- ランナー進捗バー -->
+    <div id="runner-bar">
+        <img id="runner" src="https://i.imgur.com/8bX6pQp.png">
+    </div>
+
+    <!-- タイトル → カウントダウン制御 -->
+    <script>
+        let gameStarted = false;
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "Enter" && !gameStarted) {
+                document.getElementById("title-screen").style.display = "none";
+                startCountdown();
+                gameStarted = true;
+            }
+        });
+
+        async function startCountdown() {
+            const cd = document.getElementById("countdown-screen");
+            const text = document.getElementById("countdown");
+
+            cd.style.display = "flex";
+
+            const seq = ["3", "2", "1", "GO!!"];
+
+            for (let i = 0; i < seq.length; i++) {
+                text.textContent = seq[i];
+                text.style.animation = "none";
+                void text.offsetWidth;
+                text.style.animation = "";
+                await new Promise(r => setTimeout(r, 800));
+            }
+
+            cd.style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
