@@ -1,0 +1,10 @@
+﻿question_no,section,genre,display,answer
+1,5,Linuxコマンド,ls -la,ls -la
+2,5,Linuxコマンド,cd /var/log,cd /var/log
+3,5,Linuxコマンド,"grep -n ""ERROR"" app.log","grep -n ""error"" app.log"
+4,5,Linuxコマンド,curl -I https://example.com,curl -i https://example.com
+5,5,SQLコマンド,SELECT * FROM users;,select * from users;
+6,5,SQLコマンド,"SELECT id, name FROM users ORDER BY id DESC;","select id, name from users order by id desc;"
+7,5,SQLコマンド,"INSERT INTO users (name, status) VALUES ('Kir', 'active');","insert into users (name, status) values ('kir', 'active');"
+8,5,SQLコマンド,UPDATE users SET status = 'inactive' WHERE id = 10;,update users set status = 'inactive' where id = 10;
+9,5,SQLコマンド,DELETE FROM users WHERE id = 10;,delete from users where id = 10;

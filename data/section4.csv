@@ -1,0 +1,11 @@
+﻿question_no,section,genre,display,answer
+1,4,Git,git status,git status
+2,4,Git,git branch --show-current,git branch --show-current
+3,4,Git,git pull origin main,git pull origin main
+4,4,Git,git log --oneline -5,git log --oneline -5
+5,4,Docker,docker ps,docker ps
+6,4,Docker,docker images,docker images
+7,4,Docker,docker exec -it kir-app /bin/sh,docker exec -it kir-app /bin/sh
+8,4,Docker,docker logs --tail 50 kir-app,docker logs --tail 50 kir-app
+9,4,HTTP・確認系,curl -s https://example.com/api/status | jq .,curl -s https://example.com/api/status | jq .
+10,4,HTTP・確認系,curl -I https://example.com,curl -i https://example.com
