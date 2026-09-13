@@ -31,21 +31,100 @@ const DOM = {
 };
 
 /* =========================================================
-   CSV PARSER
+   CSV PARSER（完全版 / カンマ対応）
 ========================================================= */
 function parseCSV(text) {
-    const lines = text.trim().split("\n");
-    const header = lines[0].split(",");
-    return lines.slice(1).map(line => {
-        const cols = line.split(",");
-        return {
-            question_no: cols[0],
-            section: cols[1],
-            genre: cols[2],
-            display: cols[3],
-            answer: cols[4]
-        };
-    });
+
+    text = String(text || "").replace(/^\uFEFF/, "");
+    text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+
+        const char = text[i];
+        const next = text[i + 1];
+
+        // "" → エスケープ
+        if (char === '"' && inQuotes && next === '"') {
+            cell += '"';
+            i++;
+            continue;
+        }
+
+        // " → inQuotes トグル
+        if (char === '"') {
+            inQuotes = !inQuotes;
+            continue;
+        }
+
+        // カンマ（inQuotes外のみ区切り）
+        if (char === "," && !inQuotes) {
+            row.push(cell);
+            cell = "";
+            continue;
+        }
+
+        // 改行（inQuotes外のみ区切り）
+        if (char === "\n" && !inQuotes) {
+            row.push(cell);
+            cell = "";
+            if (row.some(v => String(v).trim() !== "")) {
+                rows.push(row);
+            }
+            row = [];
+            continue;
+        }
+
+        cell += char;
+    }
+
+    row.push(cell);
+    if (row.some(v => String(v).trim() !== "")) {
+        rows.push(row);
+    }
+
+    if (rows.length < 2) {
+        throw new Error("CSVにデータがありません。");
+    }
+
+    const headers = rows[0].map(v => String(v).trim().toLowerCase());
+    const required = ["question_no", "section", "genre", "display", "answer"];
+
+    const missing = required.filter(h => !headers.includes(h));
+    if (missing.length > 0) {
+        throw new Error("CSVヘッダーが不足しています: " + missing.join(", "));
+    }
+
+    const idx = {
+        no: headers.indexOf("question_no"),
+        sec: headers.indexOf("section"),
+        genre: headers.indexOf("genre"),
+        display: headers.indexOf("display"),
+        answer: headers.indexOf("answer")
+    };
+
+    const result = [];
+
+    for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r || r.length === 0) continue;
+
+        const display = String(r[idx.display] || "").trim();
+        const answer = String(r[idx.answer] || "").trim().toLowerCase();
+
+        if (!answer) continue;
+
+        result.push({
+            display,
+            answer
+        });
+    }
+
+    return result;
 }
 
 /* =========================================================
@@ -122,7 +201,7 @@ function updateRomaji() {
 }
 
 /* =========================================================
-   RUNNER PROGRESS (本番と同じ)
+   RUNNER PROGRESS（本番と同じ）
 ========================================================= */
 function updateRunner() {
     const totalChars = questions.reduce((sum, q) => sum + q.answer.length, 0);
@@ -159,6 +238,10 @@ document.addEventListener("keydown", e => {
         DOM.score.textContent = score;
         flashEffect(DOM.effectGood);
 
+        if (score % 10 === 0) {
+            flashEffect(DOM.effectBoost);
+        }
+
         if (pos === q.answer.length) {
             currentIndex++;
             pos = 0;
@@ -180,7 +263,7 @@ document.addEventListener("keydown", e => {
 });
 
 /* =========================================================
-   FINISH GAME → RESULT SCREEN
+   FINISH GAME
 ========================================================= */
 function finishGame() {
     gameStarted = false;
@@ -191,7 +274,7 @@ function finishGame() {
     DOM.resultSection.textContent = `SECTION ${selectedSection}`;
     DOM.resultScore.textContent = `Score: ${score}`;
     DOM.resultMiss.textContent = `Miss: ${miss}`;
-    DOM.resultAccuracy.textContent = `Accuracy: ${accuracy.toFixed(1)}%`;
+    DOM.resultAccuracy.textContent = `${accuracy.toFixed(1)}%`;
 
     DOM.resultScreen.style.display = "flex";
 }
